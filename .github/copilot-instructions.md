@@ -51,7 +51,7 @@ When providing suggestions or explanations, align advice with the following prin
 
 - Use **function components** (no class components).
 - Prefer **hooks** (`useState`, `useEffect`, `useMemo`, `useCallback`, custom hooks) appropriately.
-- Use **React 18** features correctly (e.g. `createRoot`, concurrent rendering, automatic batching).
+- Use **React 19** features correctly (e.g. `createRoot`, concurrent rendering, automatic batching, the `use` hook, Actions).
 - Use **typed components**: define prop types with `interface` or `type`, let hooks infer their return types when possible.
 - Avoid unnecessary re-renders; memoize only when justified.
 
@@ -80,9 +80,11 @@ When providing suggestions or explanations, align advice with the following prin
 
 ## Tooling Context
 
-- Build: `webpack` + `babel`.
-- Test: `jest` + `@testing-library/react` + `msw` (mock service worker) for API mocking.
-- The kata uses the [PokeAPI](https://pokeapi.co/) — never call it directly in tests; always mock via `src/test/mock-server.js`.
+- Package manager: `pnpm`.
+- Build: `vite` + `@vitejs/plugin-react`.
+- Test: `vitest` + `@testing-library/react` + `msw` (mock service worker) for API mocking.
+- Language: TypeScript (`strict: true`).
+- The kata uses the [PokeAPI](https://pokeapi.co/) — never call it directly in tests; always mock via `src/test/mock-server.ts`.
 
 ## Response Style
 
