@@ -2,37 +2,38 @@ import React from "react";
 import {
   render,
   screen,
-  waitForElementToBeRemoved,
 } from "@testing-library/react";
 import PokemonList from "../pokemon-list";
 import userEvent from "@testing-library/user-event";
-import { server, rest } from "../test/mock-server";
+import { http, HttpResponse } from "msw";
+import { server } from "../test/mock-server";
 import pokemonsResultPage1 from "./pokemon-result-limit-5-offset-0.json";
 import pokemonsResultPage2 from "./pokemon-result-limit-5-offset-5.json";
 import pokemonsResultPage3 from "./pokemon-result-limit-5-offset-10.json";
 
 describe("Pokemon list with 'Load more' button", () => {
-  let getPokemonsMock = jest.fn();
+  let getPokemonsMock = vi.fn();
   beforeEach(() => {
     server.use(
-      rest.get("https://pokeapi.co/api/v2/pokemon", async (req, res, ctx) => {
+      http.get("https://pokeapi.co/api/v2/pokemon", async ({ request }) => {
+        const url = new URL(request.url);
         console.log(
-          `Pokemons API was called with ${req.url.searchParams.toString()}`
+          `Pokemons API was called with ${url.searchParams.toString()}`
         );
-        const offset = parseInt(req.url.searchParams.get("offset")),
-          limit = parseInt(req.url.searchParams.get("limit"));
+        const offset = parseInt(url.searchParams.get("offset") ?? "0"),
+          limit = parseInt(url.searchParams.get("limit") ?? "0");
         getPokemonsMock({ offset, limit });
 
         if (offset === 0) {
-          return res(ctx.json(pokemonsResultPage1));
+          return HttpResponse.json(pokemonsResultPage1);
         } else if (offset === 5) {
-          return res(ctx.json(pokemonsResultPage2));
+          return HttpResponse.json(pokemonsResultPage2);
         } else if (offset === 10) {
           // Mocked data is different from real world:
           // total count was changed to 12, to pretend this is the last page
-          return res(ctx.json(pokemonsResultPage3));
+          return HttpResponse.json(pokemonsResultPage3);
         } else {
-          return res(ctx.json({ count: 0, results: [] }));
+          return HttpResponse.json({ count: 0, results: [] });
         }
       })
     );
