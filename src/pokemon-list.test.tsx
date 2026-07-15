@@ -3,13 +3,13 @@ import {
   render,
   screen,
 } from "@testing-library/react";
-import PokemonList from "../pokemon-list";
+import PokemonList from "./pokemon-list";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
-import { server } from "../test/mock-server";
-import pokemonsResultPage1 from "./pokemon-result-limit-5-offset-0.json";
-import pokemonsResultPage2 from "./pokemon-result-limit-5-offset-5.json";
-import pokemonsResultPage3 from "./pokemon-result-limit-5-offset-10.json";
+import { server } from "./__tests__/mock-server";
+import pokemonsResultPage1 from "./__tests__/pokemon-result-limit-5-offset-0.json";
+import pokemonsResultPage2 from "./__tests__/pokemon-result-limit-5-offset-5.json";
+import pokemonsResultPage3 from "./__tests__/pokemon-result-limit-5-offset-10.json";
 
 describe("Pokemon list with 'Load more' button", () => {
   let getPokemonsMock = vi.fn();
