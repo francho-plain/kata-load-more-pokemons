@@ -1,0 +1,53 @@
+{
+  "name": "kata-load-more-pokemons",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "remoteUser": "node",
+  "forwardPorts": [
+    5173,
+    4173
+  ],
+  "portsAttributes": {
+    "5173": {
+      "label": "Vite Dev Server",
+      "onAutoForward": "openBrowser"
+    },
+    "4173": {
+      "label": "Vite Preview"
+    }
+  },
+  "containerEnv": {
+    "CHOKIDAR_USEPOLLING": "true"
+  },
+  "mounts": [
+    "source=pnpm-store-kata-load-more-pokemons,target=/home/node/.local/share/pnpm/store,type=volume"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "npm.packageManager": "pnpm",
+        "editor.formatOnSave": true,
+        "eslint.validate": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact"
+        ]
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "vitest.explorer",
+        "ms-vscode.vscode-typescript-next",
+        "ms-vsliveshare.vsliveshare"
+      ]
+    }
+  },
+  "postCreateCommand": "pnpm install",
+  "postAttachCommand": {
+    "dev-server-hint": "echo 'Run: pnpm start -- --host 0.0.0.0'"
+  }
+}
