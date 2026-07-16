@@ -45,7 +45,7 @@
     "vitest": "^4.1.10"
   },
   "prettier": {
-    "semi": true,
+    "semi": false,
     "trailingComma": "es5",
     "singleQuote": true,
     "printWidth": 100,

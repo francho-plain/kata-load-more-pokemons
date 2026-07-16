@@ -1,4 +1,4 @@
-import { setupServer } from 'msw/node';
+import { setupServer } from 'msw/node'
 
-const server = setupServer();
-export { server };
+const server = setupServer()
+export { server }

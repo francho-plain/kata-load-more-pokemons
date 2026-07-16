@@ -35,6 +35,7 @@ export default [
     rules: {
       ...tsPlugin.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
+      semi: 'off',
       'react/react-in-jsx-scope': 'off',  // not needed with React 17+ JSX transform
       'react/prop-types': 'off',           // TypeScript handles this
     },
