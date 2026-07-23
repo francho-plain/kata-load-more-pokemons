@@ -3,16 +3,16 @@
 // https://pokeapi.co/api/v2/pokemon?limit=5&offset=0
 
 import { useEffect, useState } from "react"
+import { PokemonCard } from "./components/"
+import { Pokemon } from "./types"
 
 const POKEMON_LIMIT = 5
 
-type Pokemon = {
-    name: string
-}
+
 
 const PokemonList = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([])
-  const [numPokemons, setNumPokemons ] = useState(0) 
+  const [numPokemons, setNumPokemons] = useState(0)
   const [page, setPage] = useState(0)
 
   useEffect(() => {
@@ -37,16 +37,19 @@ const PokemonList = () => {
       <p>Displaying {pokemons.length} of {numPokemons} results</p>
       <ul>
         {pokemons && pokemons.map((pokemon: Pokemon) => (
-          <li key={pokemon.name}>{pokemon.name}</li>
+          <li key={pokemon.name}>
+            <PokemonCard pokemon={pokemon} />
+          </li>
         ))}
-      </ul> 
-      
+      </ul>
+
       {
         pokemons.length < numPokemons && (
-          <button onClick={() => {setPage(prev => prev + 1)}}>Load more</button>
+          <button onClick={() => { setPage(prev => prev + 1) }}>Load more</button>
         )
       }
 
+      
     </div>
 
   )
